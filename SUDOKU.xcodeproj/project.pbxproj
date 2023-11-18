@@ -13,6 +13,7 @@
 		02761E022B08B6CE00B805FE /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 02761E012B08B6CE00B805FE /* Preview Assets.xcassets */; };
 		02761E092B08B8C100B805FE /* SudokuSolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02761E082B08B8C100B805FE /* SudokuSolver.swift */; };
 		02761E0B2B08BA2B00B805FE /* SudokuBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02761E0A2B08BA2B00B805FE /* SudokuBoard.swift */; };
+		02EB62A92B08F669008602D4 /* MainView .swift in Sources */ = {isa = PBXBuildFile; fileRef = 02EB62A82B08F669008602D4 /* MainView .swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +24,7 @@
 		02761E012B08B6CE00B805FE /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		02761E082B08B8C100B805FE /* SudokuSolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SudokuSolver.swift; sourceTree = "<group>"; };
 		02761E0A2B08BA2B00B805FE /* SudokuBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SudokuBoard.swift; sourceTree = "<group>"; };
+		02EB62A82B08F669008602D4 /* MainView .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainView .swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +59,7 @@
 			children = (
 				02761DFA2B08B6CD00B805FE /* SUDOKUApp.swift */,
 				02761DFC2B08B6CD00B805FE /* ContentView.swift */,
+				02EB62A82B08F669008602D4 /* MainView .swift */,
 				02761E0A2B08BA2B00B805FE /* SudokuBoard.swift */,
 				02761E082B08B8C100B805FE /* SudokuSolver.swift */,
 				02761DFE2B08B6CE00B805FE /* Assets.xcassets */,
@@ -143,6 +146,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				02EB62A92B08F669008602D4 /* MainView .swift in Sources */,
 				02761DFD2B08B6CD00B805FE /* ContentView.swift in Sources */,
 				02761DFB2B08B6CD00B805FE /* SUDOKUApp.swift in Sources */,
 				02761E092B08B8C100B805FE /* SudokuSolver.swift in Sources */,

@@ -2,6 +2,7 @@
 import SwiftUI
 
 struct ContentView: View {
+    var difficulty: Difficulty
     @State private var sudokuBoard: [[Int]] = [
         [5, 3, 0, 0, 7, 0, 0, 0, 9],
         [6, 0, 0, 4, 2, 6, 1, 3, 0],
@@ -31,13 +32,20 @@ struct ContentView: View {
                     Divider().background(Color.black)
                 }
             }
-         
-            Button("Solve Sudoku") {
-                self.solveSudoku()
+            Spacer()
+            HStack {
+                Button("Solve Sudoku") {
+                    self.solveSudoku()
+                }
+                .controlSize(.large)
+                .buttonStyle(.borderedProminent)
+                
+                Button("Refresh Sudoku") {
+                    self.refreshSudoku()
+                }
+                .controlSize(.large)
+                .buttonStyle(.borderedProminent)
             }
-            .padding()
-            .controlSize(.large)
-            .buttonStyle(.borderedProminent)
             
         }
         
@@ -53,6 +61,12 @@ struct ContentView: View {
             print("No solution found.")
         }
     }
+    
+    func refreshSudoku() {
+           // Burada farklı bir sudoku yükleyebilirsiniz. İstediğiniz logic'i ekleyin.
+           // Örneğin, farklı bir zorluk seviyesine sahip yeni bir sudoku oluşturabilir veya
+           // mevcut sudokuBoard'u temizleyerek başka bir sudoku yükleyebilirsiniz.
+       }
 }
 
 struct SudokuCell: View {
@@ -67,16 +81,17 @@ struct SudokuCell: View {
 struct SudokuTextFieldStyle: TextFieldStyle {
     func _body(configuration: TextField<_Label>) -> some View {
         configuration
-            .frame(width: 25, height: 25)
+            .frame(width: 33, height: 33)
             .border(Color.black, width: 0.3)
             .multilineTextAlignment(.center)
             .foregroundColor(.blue)
-            .font(.headline)
+            .font(.headline).bold()
+            .cornerRadius(2)
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ContentView(difficulty: Difficulty.easy)
     }
 }
