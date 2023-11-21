@@ -11,7 +11,7 @@ import SwiftUI
 struct SUDOKUApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView(difficulty: .easy)
+            MainView()
         }
     }
 }

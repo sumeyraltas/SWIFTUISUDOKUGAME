@@ -3,59 +3,51 @@ import SwiftUI
 
 struct ContentView: View {
     var difficulty: Difficulty
-    @State private var sudokuBoard: [[Int]] = [
-        [5, 3, 0, 0, 7, 0, 0, 0, 9],
-        [6, 0, 0, 4, 2, 6, 1, 3, 0],
-        [0, 9, 8, 0, 0, 0, 0, 6, 0],
-        [8, 0, 0, 0, 6, 0, 0, 0, 3],
-        [4, 0, 0, 8, 0, 3, 0, 0, 1],
-        [7, 0, 0, 0, 2, 0, 0, 0, 6],
-        [0, 6, 0, 0, 0, 0, 2, 8, 0],
-        [0, 0, 0, 4, 1, 9, 0, 0, 5],
-        [0, 0, 0, 0, 8, 0, 0, 7, 9]
-    ]
-
+    @State private var sudokuBoard = SudokuBoard()
+   
     var body: some View {
         VStack {
-            Spacer()
-            ForEach(0..<9) { row in
-                HStack {
-                    ForEach(0..<9) { column in
-                        SudokuCell(value: $sudokuBoard[row][column])
-                        if column == 2 || column == 5 {
-                            Divider().background(Color.black)
+            VStack{
+                Spacer()
+                ForEach(0..<9) { row in
+                    HStack {
+                        ForEach(0..<9) { column in
+                            SudokuCell(value: $sudokuBoard.board[row][column])
+                            if column == 2 || column == 5 {
+                                Divider().background(Color.black)
+                            }
                         }
                     }
+                   
+                    if row == 2 || row == 5 {
+                        Divider().background(Color.black).frame(width: 380)
+                    }   }
+            }.padding(150)
+   
+                HStack {
+                    
+                    Button("Solve Sudoku") {
+                        self.solveSudoku()
+                    }
+                    .controlSize(.large)
+                    .buttonStyle(.borderedProminent)
+                    
+                    Button("Refresh Sudoku") {
+                        self.refreshSudoku()
+                    }
+                    .controlSize(.large)
+                    .buttonStyle(.borderedProminent)
                 }
-                // Eğer satır 2 veya 5 ise yatay çizgi ekle
-                if row == 2 || row == 5 {
-                    Divider().background(Color.black)
-                }
-            }
-            Spacer()
-            HStack {
-                Button("Solve Sudoku") {
-                    self.solveSudoku()
-                }
-                .controlSize(.large)
-                .buttonStyle(.borderedProminent)
-                
-                Button("Refresh Sudoku") {
-                    self.refreshSudoku()
-                }
-                .controlSize(.large)
-                .buttonStyle(.borderedProminent)
-            }
-            
+         
         }
         
     }
 
     func solveSudoku() {
-        let solver = SudokuSolver(board: sudokuBoard)
+        let solver = SudokuSolver(board: sudokuBoard.board)
         if solver.solve() {
             // If the solver finds a solution, update the UI with the solved values
-            sudokuBoard = solver.getBoard()
+            sudokuBoard.board = solver.getBoard()
         } else {
             // Handle the case where no solution is found
             print("No solution found.")
@@ -63,9 +55,15 @@ struct ContentView: View {
     }
     
     func refreshSudoku() {
-           // Burada farklı bir sudoku yükleyebilirsiniz. İstediğiniz logic'i ekleyin.
-           // Örneğin, farklı bir zorluk seviyesine sahip yeni bir sudoku oluşturabilir veya
-           // mevcut sudokuBoard'u temizleyerek başka bir sudoku yükleyebilirsiniz.
+        switch difficulty {
+        case .easy:
+            sudokuBoard.board = SudokuBoard().getRandomBoard(difficulty: .easy)
+        case .medium:
+            sudokuBoard.board = SudokuBoard().getRandomBoard(difficulty: .medium)
+        case .hard:
+            sudokuBoard.board = SudokuBoard().getRandomBoard(difficulty: .hard)
+        }
+
        }
 }
 

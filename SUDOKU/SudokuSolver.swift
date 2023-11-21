@@ -1,75 +1,74 @@
 import Foundation
 
 class SudokuSolver {
-    var board: [[Int]]
-
+    
+    var board: [[Int]] // for solved board
+    
     init(board: [[Int]]) {
         self.board = board
     }
-
-    private func isValid(_ row: Int, _ col: Int, _ num: Int) -> Bool {
-        // Check if the number is not in the current row and column
+    
+    private func checkRowColumn(row: Int, col: Int, number: Int) -> Bool {
         for i in 0..<9 {
-            if board[row][i] == num || board[i][col] == num {
+            if board[row][i] == number || board[i][col] == number {
                 return false
             }
         }
-
-        // Check if the number is not in the current 3x3 box
-        let boxStartRow = row - row % 3
-        let boxStartCol = col - col % 3
+        return true
+    }
+    
+    private func checkSmallBox(row: Int, col: Int, number: Int) -> Bool {
+        let x = (row / 3) * 3
+        let y = (col / 3) * 3
+        
         for i in 0..<3 {
             for j in 0..<3 {
-                if board[boxStartRow + i][boxStartCol + j] == num {
+                if board[i + x][j + y] == number {
                     return false
                 }
             }
         }
-
         return true
     }
-
-    private func findEmptyLocation() -> (row: Int, col: Int)? {
+    
+    func solve() -> Bool {
+        for row in 0..<9 {
+            for col in 0..<9 {
+                if board[row][col] == 0 {
+                    for number in 1...9 {
+                        if checkRowColumn(row: row, col: col, number: number)
+                            && checkSmallBox(row: row, col: col, number: number) {
+                            board[row][col] = number
+                            if solve() {
+                                return true
+                            } else {
+                                board[row][col] = 0
+                            }
+                        }
+                    }
+                    return false
+                }
+            }
+        }
+        return true
+    }
+    
+    func toString(board: [[Int]]) -> String {
+        var result = ""
         for i in 0..<9 {
             for j in 0..<9 {
-                if board[i][j] == 0 {
-                    return (i, j)
-                }
+                result += "\(board[i][j]) "
             }
+            result += "\n"
         }
-        return nil
+        return result
     }
-
-    func solve() -> Bool {
-        guard let emptyLocation = findEmptyLocation() else {
-            // No empty location, puzzle is solved
-            return true
-        }
-
-        let row = emptyLocation.row
-        let col = emptyLocation.col
-
-        for num in 1...9 {
-            if isValid(row, col, num) {
-                board[row][col] = num
-
-                if solve() {
-                    return true
-                }
-
-                // If placing the number at (row, col) doesn't lead to a solution, backtrack
-                board[row][col] = 0
-            }
-        }
-
-        // No valid number found, need to backtrack
-        return false
-    }
-
+    
     func getBoard() -> [[Int]] {
         return board
     }
+    
+    func setBoard(board: [[Int]]) {
+        self.board = board
+    }
 }
-
-
-
