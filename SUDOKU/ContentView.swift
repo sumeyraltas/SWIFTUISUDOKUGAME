@@ -3,8 +3,11 @@ import SwiftUI
 
 struct ContentView: View {
     var difficulty: Difficulty
+    @Binding var selectedDifficulty: Difficulty
     @State private var sudokuBoard = SudokuBoard()
-   
+    @State private var isDifficultyPickerPresented = false
+    @State private var showAlert = false
+
     var body: some View {
         VStack {
             VStack{
@@ -18,14 +21,12 @@ struct ContentView: View {
                             }
                         }
                     }
-                   
                     if row == 2 || row == 5 {
                         Divider().background(Color.black).frame(width: 380)
-                    }   }
+                    }
+                }
             }.padding(150)
-   
                 HStack {
-                    
                     Button("Solve Sudoku") {
                         self.solveSudoku()
                     }
@@ -33,38 +34,35 @@ struct ContentView: View {
                     .buttonStyle(.borderedProminent)
                     
                     Button("Refresh Sudoku") {
-                        self.refreshSudoku()
+                            self.isDifficultyPickerPresented.toggle()
                     }
                     .controlSize(.large)
                     .buttonStyle(.borderedProminent)
+                    .sheet(isPresented: $isDifficultyPickerPresented) {
+                                        DifficultyPicker(selectedDifficulty: $selectedDifficulty, onDismiss: updateBoard)
+                                    }
                 }
-         
         }
-        
+        .onAppear {
+            updateBoard() // Initial board update
+        }
+        .alert(isPresented: $showAlert) {
+            Alert(title: Text("No Solution Found"), message: Text("The Sudoku puzzle has no solution."), dismissButton: .default(Text("OK")))
+        }
+    }
+
+    func updateBoard() {
+        sudokuBoard.board = SudokuBoard().getRandomBoard(difficulty: selectedDifficulty)
     }
 
     func solveSudoku() {
         let solver = SudokuSolver(board: sudokuBoard.board)
         if solver.solve() {
-            // If the solver finds a solution, update the UI with the solved values
             sudokuBoard.board = solver.getBoard()
         } else {
-            // Handle the case where no solution is found
-            print("No solution found.")
+            showAlert = true
         }
     }
-    
-    func refreshSudoku() {
-        switch difficulty {
-        case .easy:
-            sudokuBoard.board = SudokuBoard().getRandomBoard(difficulty: .easy)
-        case .medium:
-            sudokuBoard.board = SudokuBoard().getRandomBoard(difficulty: .medium)
-        case .hard:
-            sudokuBoard.board = SudokuBoard().getRandomBoard(difficulty: .hard)
-        }
-
-       }
 }
 
 struct SudokuCell: View {
@@ -90,6 +88,6 @@ struct SudokuTextFieldStyle: TextFieldStyle {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(difficulty: Difficulty.easy)
+        ContentView(difficulty: Difficulty.easy, selectedDifficulty: .constant(Difficulty.easy))
     }
 }

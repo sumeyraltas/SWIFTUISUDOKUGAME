@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		026233412B0F5FF500DD4AE0 /* DifficultyPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026233402B0F5FF500DD4AE0 /* DifficultyPicker.swift */; };
 		02761DFB2B08B6CD00B805FE /* SUDOKUApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02761DFA2B08B6CD00B805FE /* SUDOKUApp.swift */; };
 		02761DFD2B08B6CD00B805FE /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02761DFC2B08B6CD00B805FE /* ContentView.swift */; };
 		02761DFF2B08B6CE00B805FE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 02761DFE2B08B6CE00B805FE /* Assets.xcassets */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		026233402B0F5FF500DD4AE0 /* DifficultyPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DifficultyPicker.swift; sourceTree = "<group>"; };
 		02761DF72B08B6CD00B805FE /* SUDOKU.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SUDOKU.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		02761DFA2B08B6CD00B805FE /* SUDOKUApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SUDOKUApp.swift; sourceTree = "<group>"; };
 		02761DFC2B08B6CD00B805FE /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -59,6 +61,7 @@
 			children = (
 				02761DFA2B08B6CD00B805FE /* SUDOKUApp.swift */,
 				02761DFC2B08B6CD00B805FE /* ContentView.swift */,
+				026233402B0F5FF500DD4AE0 /* DifficultyPicker.swift */,
 				02EB62A82B08F669008602D4 /* MainView .swift */,
 				02761E0A2B08BA2B00B805FE /* SudokuBoard.swift */,
 				02761E082B08B8C100B805FE /* SudokuSolver.swift */,
@@ -150,6 +153,7 @@
 				02761DFD2B08B6CD00B805FE /* ContentView.swift in Sources */,
 				02761DFB2B08B6CD00B805FE /* SUDOKUApp.swift in Sources */,
 				02761E092B08B8C100B805FE /* SudokuSolver.swift in Sources */,
+				026233412B0F5FF500DD4AE0 /* DifficultyPicker.swift in Sources */,
 				02761E0B2B08BA2B00B805FE /* SudokuBoard.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
