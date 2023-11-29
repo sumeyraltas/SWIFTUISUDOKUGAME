@@ -7,7 +7,8 @@ struct ContentView: View {
     @State private var sudokuBoard = SudokuBoard()
     @State private var isDifficultyPickerPresented = false
     @State private var showAlert = false
-
+    @State private var alertMessage = ""
+    @State private var alertTitle = ""
     var body: some View {
         VStack {
             VStack{
@@ -25,19 +26,23 @@ struct ContentView: View {
                         Divider().background(Color.black).frame(width: 380)
                     }
                 }
-            }.padding(150)
+            }.padding(125)
                 HStack {
+                    Button("Finish Sudoku") {
+                        self.finishSudoku()
+                    }
+                    .buttonStyle(.borderedProminent).padding()
+                    
                     Button("Solve Sudoku") {
                         self.solveSudoku()
                     }
-                    .controlSize(.large)
-                    .buttonStyle(.borderedProminent)
+                    .buttonStyle(.borderedProminent).padding()
                     
                     Button("Refresh Sudoku") {
                             self.isDifficultyPickerPresented.toggle()
                     }
-                    .controlSize(.large)
-                    .buttonStyle(.borderedProminent)
+               
+                    .buttonStyle(.borderedProminent).padding()
                     .sheet(isPresented: $isDifficultyPickerPresented) {
                                         DifficultyPicker(selectedDifficulty: $selectedDifficulty, onDismiss: updateBoard)
                                     }
@@ -46,23 +51,55 @@ struct ContentView: View {
         .onAppear {
             updateBoard() // Initial board update
         }
+      
         .alert(isPresented: $showAlert) {
-            Alert(title: Text("No Solution Found"), message: Text("The Sudoku puzzle has no solution."), dismissButton: .default(Text("OK")))
+            Alert(title: Text(alertTitle), message: Text(alertMessage), dismissButton: .default(Text("OK")))
         }
     }
 
     func updateBoard() {
         sudokuBoard.board = SudokuBoard().getRandomBoard(difficulty: selectedDifficulty)
     }
-
+    
     func solveSudoku() {
         let solver = SudokuSolver(board: sudokuBoard.board)
+        
         if solver.solve() {
             sudokuBoard.board = solver.getBoard()
+            showAlert(title:"Sudoku Finished",message: "You can observe the solved Sudoku!")
         } else {
-            showAlert = true
+            showAlert(title:"Sorry!",message: "No Solution Found")
         }
     }
+    func finishSudoku() {
+        let solver = SudokuSolver(board: sudokuBoard.board)
+        let isBoardFullyFilled = sudokuBoard.board.flatMap { $0 }.allSatisfy { $0 != 0 }
+        
+        if isBoardFullyFilled {
+            let userBoard = sudokuBoard.board.map { $0.map { $0 } }
+            
+            if solver.solve() && userBoard == solver.getBoard() {
+                showAlert(title: "Congratulations!", message: "You've successfully completed the Sudoku!")
+            } else {
+                showAlert(title: "Please Try Again", message: "The Sudoku solution is not correct. Keep trying!")
+            }
+        } else {
+            showAlert(title: "Incomplete Sudoku", message: "Please fill in all cells before finishing.")
+        }
+    }
+
+
+
+
+    func showAlert(title: String, message: String) {
+        showAlert = true
+        alertTitle = title
+        alertMessage = message
+    }
+
+
+ 
+
 }
 
 struct SudokuCell: View {
